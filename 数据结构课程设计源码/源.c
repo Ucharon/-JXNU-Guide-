@@ -2,13 +2,13 @@
 #include"func.h"
 
 int main(void) {
-	/*create();
+	create();
 	printf("Weclome to the JXNU\n");
 	printf("欢迎使用JXNUGuide\n");
 	printf("请选择您使用的角色\n");
 	printf("游客请按1\n");
 	printf("管理员请按2\n");
-	printf("其他选择将退出系统\n");*/
+	printf("其他选择将退出系统\n");
 
 	int choose;
 	scanf_s("%d", &choose);
