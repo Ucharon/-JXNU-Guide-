@@ -38,4 +38,17 @@
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\数据结构课程设计\作业说明.md">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\数据结构课程设计\map.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\数据结构课程设计\GuideTODO.png">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
