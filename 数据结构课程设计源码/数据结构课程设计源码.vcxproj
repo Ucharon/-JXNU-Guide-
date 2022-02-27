@@ -151,11 +151,11 @@
     <Text Include="vers.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\数据结构课程设计\作业说明.md" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\..\数据结构课程设计\GuideTODO.png" />
     <Image Include="..\..\数据结构课程设计\map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\数据结构课程设计\作业说明.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
