@@ -1,6 +1,6 @@
 #include"first.h"
 #include"func.h"
-
+//test
 int main(void) {
 	create();
 	printf("Weclome to the JXNU\n");
