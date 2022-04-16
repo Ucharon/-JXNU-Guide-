@@ -2,6 +2,8 @@
 #include"func.h"
 
 int main(void) {
+	system("color f0");
+
 	create();
 	printf("Weclome to the JXNU\n");
 	printf("ª∂”≠ π”√JXNUGuide\n");

@@ -29,6 +29,41 @@ void showInfo(void) {
 }
 
 void Visiter(void) {
+	system("cls");	//清屏
+	int choose = 0;
+
+	while (True) {
+		printf("来了老弟！欢迎来到江西师范大学JXNU\n");
+		printf("功能菜单\n");
+		printf("1.景点描述\n");
+		printf("2.查询当前位置到其它位置的最短路径\n");
+		printf("3.查询任意两个位置的最短路径\n");
+		printf("4.离开系统\n");
+		scanf_s("%d", &choose);
+		system("cls");
+
+		switch (choose) {
+		case 1:
+			printf("景点描述:\n");
+			introduct();
+			break;
+		case 2:
+			printf("迪杰斯特拉算法帮你瞅瞅最短路径\n");
+			Dijkstra();
+			break;
+		case 3:
+			printf("弗洛易得帮你看看任意两点的最短路径\n");
+			Floyd();
+			break;
+		case 4:
+			printf("这就 回到主界面了，老哥再见~n");
+			return;
+		default:
+			printf("老哥您输错了吧，再来试试？\n");
+			break;
+		}
+	}
+
 	return;
 }
 
