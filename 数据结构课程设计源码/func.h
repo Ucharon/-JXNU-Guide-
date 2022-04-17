@@ -8,7 +8,7 @@ void showInfo(void);					//输出所有景点
 void Visiter(void);						//游客系统
 void Administrator(void);				//管理员系统
 void introduct(void);					//景点介绍
-void DijkstraHeap(void);					//查找游客所在景点与其他景点的距离（堆优化的迪杰斯特拉算法）
+void DijkstraHeap(void);				//查找游客所在景点与其他景点的距离（堆优化的迪杰斯特拉算法）
 void Floyd(void);						//查找游客指定的两个景点间的最短路径长度
 void modifyInfo(void);					//修改景点信息
 void addInfo(void);						//添加景点
@@ -19,7 +19,6 @@ void create(void);						//生成图
 void printPath(int[], int, int);		//输出路线信息			
 
 
-//输出所有顶点
 void showInfo(void) {
 	system("cls");	//清屏
 	printf("JXNU景点列表:\n");
@@ -245,10 +244,76 @@ void Floyd(void) {
 }
 
 void Administrator(void) {
+	system("cls");
+	while (True) {
+		int choose;
+		printf("只有管理员才能看到的管理系统\n");
+		printf("1.景点介绍\n");
+		printf("2.查找您所在的景点到其他景点的最短路径\n");
+		printf("3.查找任意两个景点之间的最短路径\n");
+		printf("4.修改景点信息\n");
+		printf("5.增加景点信息\n");
+		printf("6.删除景点信息\n");
+		printf("7.增加道路\n");
+		printf("8.删除道路\n");
+		printf("9.退出管理系统\n");
+
+		scanf_s("%d", &choose);
+		switch (choose) {
+		case 1:
+			system("cls");
+			printf("来我给您讲讲：\n");
+			introduct();
+			break;
+		case 2:
+			system("cls");
+			printf("迪杰斯特拉算法\n");
+			DijkstraHeap();
+			break;
+		case 3:
+			system("cls");
+			printf("弗洛伊德算法\n");
+			Floyd();
+			break;
+		case 4:
+			system("cls");
+			printf("哪错了？给你改：\n");
+			modifyInfo();
+			break;
+		case 5:
+			system("cls");
+			printf("再多写两句介绍\n");
+			addInfo();
+			break;
+		case 6:
+			system("cls");
+			printf("写错了，删了吧\n");
+			delInfo();
+			break;
+		case 7:
+			system("cls");
+			printf("师大又修路了\n");
+			addPath();
+			break;
+		case 8:
+			system("cls");
+			printf("又修路不让走了？\n");
+			delPath();
+			break;
+		case 9:
+			system("cls");
+			printf("再见~~~\n");
+			return;
+		default:
+			system("cls");
+			printf("老哥输错了，要不您再试试？\n");
+			break;
+		}
+	}
+
 	return;
 }
 
-//生成图
 void create(void) {
 	FILE* num, * edge, * vers;
 
@@ -293,5 +358,25 @@ void create(void) {
 	fclose(edge);
 	fclose(vers);
 
+	return;
+}
+
+void modifyInfo(void) {
+	return;
+}
+
+void addInfo(void) {
+	return;
+}
+
+void delInfo(void) {
+	return;
+}
+
+void addPath(void) {
+	return;
+}
+
+void delPath(void) {
 	return;
 }

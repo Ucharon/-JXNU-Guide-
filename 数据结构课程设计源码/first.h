@@ -5,6 +5,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include<Windows.h>
+#include<conio.h>
 
 #define MaxVerNum 100				//最大节点数
 #define	MaxNameLength 100			//节点名的最大长度
