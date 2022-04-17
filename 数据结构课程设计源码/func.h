@@ -148,7 +148,7 @@ void DijkstraHeap(void) {
 	//输出路线和距离
 	for (int i = 0; i < JXNUmap.n; i++) {
 		if (i != num) {
-			printf("你现在在%s，到%s的距离是%dm\n",JXNUmap.vers[num].name, JXNUmap.vers[i].name, dis[i]);
+			printf("你现在在%s，到%s的距离是%dm\n", JXNUmap.vers[num].name, JXNUmap.vers[i].name, dis[i]);
 			printf("路线是：");
 			printPath(pre, i, num);
 			printf("\b\b     \n\n");
@@ -176,12 +176,72 @@ void printPath(int pre[], int i, int num) {
 	}
 	printPath(pre, pre[i], num);
 	printf("%s->", JXNUmap.vers[i].name);
-	
+
 	return;
 }
 
 void Floyd(void) {
+	if (JXNUmap.n <= 0) {
+		printf("地图中无任何景点，请先添加景点！\n");
+		return;
+	}
 
+	showInfo();
+	int path[MaxVerNum][MaxVerNum];
+	int dist[MaxVerNum][MaxVerNum];
+	int i, j, k;
+	int temp;
+
+	for (i = 0; i < JXNUmap.n; i++)
+		for (j = 0; j < JXNUmap.n; j++) {
+			dist[i][j] = JXNUmap.edges[i][j];
+			path[i][j] = j;
+		}
+	for (k = 0; k < JXNUmap.n; k++)
+		for (i = 0; i < JXNUmap.n; i++)
+			for (j = 0; j < JXNUmap.n; j++) {
+				temp = (dist[i][k] == INFINITY || dist[k][j] == INFINITY) ? INFINITY : (dist[i][k] + dist[k][j]);
+				if (dist[i][j] > temp) {
+					dist[i][j] = temp;
+					path[i][j] = k;
+				}
+			}
+	int a, b;
+	printf("请输入您要查询之间距离的两个景点编号，中间用空格隔开：\n");
+	scanf_s("%d %d", &b, &a);
+	while (a < 1 || a > JXNUmap.n || b < 1 || b > JXNUmap.n || a == b) {
+		if (a == b)
+			printf("请勿输入两个相同编号，重新输入！\n");
+		else
+			printf("编号输入有误，两个编号都应位于1～%d之间，重新输入！\n", JXNUmap.n);
+		scanf_s("%d %d", &b, &a);
+	}
+	if (dist[a - 1][b - 1] == INFINITY) {
+		printf("%s与%s之间无路径！\n", JXNUmap.vers[b - 1].name, JXNUmap.vers[a - 1].name);
+		return;
+	}
+	else {
+		printf("%s到%s的最短路径长度为：%d米\n", JXNUmap.vers[b - 1].name, JXNUmap.vers[a - 1].name, dist[a - 1][b - 1]);
+		printf("路径为：%s", JXNUmap.vers[b - 1].name);
+		if (path[a][b] == b)
+			printf("->%s\n", JXNUmap.vers[a - 1].name);
+		else {
+			k = b - 1;
+			while (path[a - 1][k] != k) {
+				k = path[a - 1][k];
+				printf("->%s", JXNUmap.vers[k].name);
+			}
+			printf("->%s", JXNUmap.vers[a - 1].name);
+		}
+		printf("\n");
+		Sleep(1000);
+	}
+	system("pause");
+	printf("系统将在1S后回到主面板");
+	Sleep(1000);
+	system("cls");
+
+	return;
 }
 
 void Administrator(void) {

@@ -11,7 +11,7 @@
 #define MaxDescribeLength 1000		//节点描述的最大长度
 #define PASSWORD "root"				//管理员密码
 #define PASSWORDLENGTH 20			//密码长度
-#define INFINITY 1000000
+#define INFINITY 100000
 #define DELAY 982337369
 #define CONFIRMATION "QUEREN"
 #define True 1						//布尔常量
