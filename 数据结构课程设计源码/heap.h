@@ -17,11 +17,10 @@ dot heap[MaxVerNum];
 
 //交换操作
 void swap(dot* a, dot* b) {
-	dot* t;
-	t = (dot*)malloc(sizeof(dot));
-	*t = *a;
+	dot t;
+	t = *a;
 	*a = *b;
-	*b = *t;
+	*b = t;
 }
 
 //手写堆的push操作

@@ -4,19 +4,19 @@
 #include"heap.h"
 
 //1.构建函数列表
-void showInfo(void);		//输出所有景点
-void Visiter(void);			//游客系统
-void Administrator(void);	//管理员系统
-void introduct(void);		//景点介绍
-void DijkstraPro(void);		//查找游客所在景点与其他景点的距离（堆优化的迪杰斯特拉算法）
-void Floyd(void);			//查找游客指定的两个景点间的最短路径长度
-void modifyInfo(void);		//修改景点信息
-void addInfo(void);			//添加景点
-void delInfo(void);			//删除景点 
-void addPath(void);			//添加道路
-void delPath(void);			//删除道路
-void create(void);			//生成图
-void printPath(int[], int, int);		//输出路线信息
+void showInfo(void);					//输出所有景点
+void Visiter(void);						//游客系统
+void Administrator(void);				//管理员系统
+void introduct(void);					//景点介绍
+void DijkstraHeap(void);					//查找游客所在景点与其他景点的距离（堆优化的迪杰斯特拉算法）
+void Floyd(void);						//查找游客指定的两个景点间的最短路径长度
+void modifyInfo(void);					//修改景点信息
+void addInfo(void);						//添加景点
+void delInfo(void);						//删除景点 
+void addPath(void);						//添加道路
+void delPath(void);						//删除道路
+void create(void);						//生成图
+void printPath(int[], int, int);		//输出路线信息			
 
 
 //输出所有顶点
@@ -51,7 +51,7 @@ void Visiter(void) {
 			break;
 		case 2:
 			printf("迪杰斯特拉算法帮你瞅瞅最短路径\n");
-			DijkstraPro();
+			DijkstraHeap();
 			break;
 		case 3:
 			printf("弗洛伊德帮你看看任意两点的最短路径\n");
@@ -93,7 +93,7 @@ void introduct(void) {
 	return;
 }
 
-void DijkstraPro(void) {
+void DijkstraHeap(void) {
 	if (JXNUmap.n <= 0) {
 		printf("地图中无任何景点，请先添加景点！\n");
 		return;
@@ -176,6 +176,8 @@ void printPath(int pre[], int i, int num) {
 	}
 	printPath(pre, pre[i], num);
 	printf("%s->", JXNUmap.vers[i].name);
+	
+	return;
 }
 
 void Floyd(void) {
