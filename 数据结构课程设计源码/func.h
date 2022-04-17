@@ -7,7 +7,7 @@ void showInfo(void);		//输出所有景点
 void Visiter(void);			//游客系统
 void Administrator(void);	//管理员系统
 void introduct(void);		//景点介绍
-void Dijkstra(void);		//查找游客所在景点与其他景点的距离
+void DijkstraPro(void);		//查找游客所在景点与其他景点的距离
 void Floyd(void);			//查找游客指定的两个景点间的最短路径长度
 void modifyInfo(void);		//修改景点信息
 void addInfo(void);			//添加景点
@@ -49,10 +49,10 @@ void Visiter(void) {
 			break;
 		case 2:
 			printf("迪杰斯特拉算法帮你瞅瞅最短路径\n");
-			Dijkstra();
+			DijkstraPro();
 			break;
 		case 3:
-			printf("弗洛易得帮你看看任意两点的最短路径\n");
+			printf("弗洛伊德帮你看看任意两点的最短路径\n");
 			Floyd();
 			break;
 		case 4:
