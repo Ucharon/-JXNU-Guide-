@@ -1,6 +1,7 @@
 #include"first.h"
 #include"func.h"
 //test
+//пч╦др╩об
 int main(void) {
 	system("color f0");
 
