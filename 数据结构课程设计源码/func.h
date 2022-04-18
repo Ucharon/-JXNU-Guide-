@@ -57,7 +57,7 @@ void Visiter(void) {
 			Floyd();
 			break;
 		case 4:
-			printf("这就 回到主界面了，老哥再见~n");
+			printf("这就 回到主界面了，老哥再见~\n");
 			return;
 		default:
 			printf("老哥您输错了吧，再来试试？\n");

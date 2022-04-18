@@ -4,6 +4,7 @@
 //пч╦др╩об
 int main(void) {
 	system("color f0");
+	//system("mode con cols=80 lines=70");
 
 	create();
 	printf("Weclome to the JXNU\n");
