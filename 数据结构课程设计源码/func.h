@@ -199,7 +199,8 @@ void Floyd(void) {
 	for (k = 0; k < JXNUmap.n; k++)
 		for (i = 0; i < JXNUmap.n; i++)
 			for (j = 0; j < JXNUmap.n; j++) {
-				temp = (dist[i][k] == INFINITY || dist[k][j] == INFINITY) ? INFINITY : (dist[i][k] + dist[k][j]);
+				//temp = (dist[i][k] == INFINITY || dist[k][j] == INFINITY) ? INFINITY : (dist[i][k] + dist[k][j]);
+				temp = dist[i][k] + dist[k][j];
 				if (dist[i][j] > temp) {
 					dist[i][j] = temp;
 					path[i][j] = k;
@@ -221,18 +222,14 @@ void Floyd(void) {
 	}
 	else {
 		printf("%s到%s的最短路径长度为：%d米\n", JXNUmap.vers[b - 1].name, JXNUmap.vers[a - 1].name, dist[a - 1][b - 1]);
-		printf("路径为：%s", JXNUmap.vers[b - 1].name);
-		if (path[a][b] == b)
-			printf("->%s\n", JXNUmap.vers[a - 1].name);
-		else {
-			k = b - 1;
-			while (path[a - 1][k] != k) {
-				k = path[a - 1][k];
-				printf("->%s", JXNUmap.vers[k].name);
-			}
-			printf("->%s", JXNUmap.vers[a - 1].name);
+		printf("路径为：");
+		int pre[MaxVerNum];
+		for (int i = 0; i < JXNUmap.n; i++) {
+			pre[i] = path[i][b - 1];
 		}
-		printf("\n");
+		printPath(pre, a - 1, b - 1);
+		printf("\b\b  \n");
+
 		Sleep(1000);
 	}
 	system("pause");
