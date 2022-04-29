@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable:4996)
 
 #include"first.h"
 #include"heap.h"
@@ -359,21 +360,257 @@ void create(void) {
 }
 
 void modifyInfo(void) {
+	if (JXNUmap.n <= 0) {
+		printf("这是一个虚假的学校，竟然没有任何景点\n");
+		return;
+	}
+	showInfo();
+	int a;
+	printf("你说哪里要改？说编号：\n");
+	scanf_s("%d", &a);
+	while (a < 1 || a > JXNUmap.n) {
+		printf("编号输错了，从1开始到%d，你再试试别的\n", JXNUmap.n);
+		scanf_s("%d", &a);
+	}
+	char newName[100];
+	char newFeatures[1000];
+	printf("这里原来叫%s,你要把他换成啥?:\n", JXNUmap.vers[a-1].name);
+	scanf_s("%s", newName,MAXCHAR);
+	printf("简介现在是:\n%s\n你说改成啥?:\n", JXNUmap.vers[a - 1].features);
+	scanf_s("%s", newFeatures, MAXCHAR);
+	printf("正在修改...\n");
+	strcpy(JXNUmap.vers[a - 1].name, newName, MAXCHAR);
+	strcpy(JXNUmap.vers[a - 1].features,newFeatures, MAXCHAR);
+	printf("行了改好了\n");
+	printf("要还改就输入1，输别的就退出了\n");
+	int flag;
+	scanf_s("%d", &flag);
+	if (flag == True) {
+		modifyInfo();
+	}
 	return;
 }
 
 void addInfo(void) {
+	if (JXNUmap.n >= MaxVerNum) {
+		printf("师大已经满了不能再加了\n");
+		return;
+	}
+	showInfo();
+
+	char newName[100];
+	char newFeature[1000];
+	printf("新加的这个景点叫啥?:\n");
+	scanf_s("%s", newName, MAXCHAR);
+	printf("对这个景点加点简介吧:\n");
+	scanf_s("%s", newFeature, MAXCHAR);
+	showInfo();
+
+	int m;
+	printf("它旁边有几个景点:\n");
+	scanf_s("%d", &m);
+	int i, a, distance;
+	for (i = 0; i < m; i++) {
+		printf("输一下%s的第%d个相连的景点编号:\n", newName, i + 1);
+		scanf_s("%d", &a);
+		while (a< 1 || a>JXNUmap.n || JXNUmap.edges[a - 1][JXNUmap.n] != INFINITY) {
+			if (a<1 || a>JXNUmap.n)
+			{
+				printf("输错了，编号在1到%d之间，重新输！\n", JXNUmap.n);
+				scanf_s("%d", &a);
+			}
+			if (JXNUmap.edges[a - 1][JXNUmap.n] != INFINITY)
+			{
+				printf("老哥，这个已经有了，重新输\n");
+				scanf_s("%d", &a);
+			}
+		}
+
+		printf("%s与%s之间的距离是多少？:\n", newName, JXNUmap.vers[a - 1].name);
+		scanf_s("%d", &distance);
+		while (distance <= 0 || distance > INFINITY)
+		{
+			printf("距离输入非法了重新输入！\n");
+			scanf_s("%d", &distance);
+		}
+		JXNUmap.edges[a - 1][JXNUmap.n] = JXNUmap.edges[JXNUmap.n][a - 1] = distance;
+	}
+	printf("正在添加景点...\n");
+	strcpy(JXNUmap.vers[JXNUmap.n++].name, newName, MAXCHAR);
+	strcpy(JXNUmap.vers[JXNUmap.n-1].features, newFeature, MAXCHAR);
+	JXNUmap.e += m;
+
+	printf("这个景点添加成功了！\n");
+	printf("还要加就输入1，输入其他字符就退出\n");
+	int flag;
+	scanf_s("%d", &flag);
+	if (flag == 1)
+		addInfo();
 	return;
 }
 
+
+//删除景点信息
+
+//删除景点信息，需要修改边的长度，景点信息，还要把删除景点的后面所有景点进行迁移，相应的路径也应该做好相应的变换。
 void delInfo(void) {
+	if (JXNUmap.n <= 0) {
+		printf("已经删没了，不能再删除!\n");
+		return;
+	}
+	showInfo();
+	printf("请输入你要删除景点的编号:\n");
+	int a;
+	scanf_s("%d", &a);
+	while (a < 1 || a > JXNUmap.n) {
+		printf("你输错了，景点id范围为1-%d", JXNUmap.n);
+		scanf_s("%d", &a);
+	}
+	printf("删除的景点为: %s确认删除嘛？输入1确认删除:\n", JXNUmap.vers[a - 1].name);
+	int flag;
+	scanf_s("%d", &flag);
+	if (flag == 1) {
+		printf("删除景点中，请稍后.....\n");
+		int i, j, count = 0;
+		//count记录这条要删除景点关联的编号
+		for (i = 0; i < JXNUmap.n; i++) {
+			if (JXNUmap.edges[a - 1][i] != INFINITY) {
+				count++;
+			}
+		}
+		//将要删除的景点的后续节点迁移
+		for (i = a - 1; i < JXNUmap.n; i++) {
+			JXNUmap.vers[i] = JXNUmap.vers[i + 1];
+		}
+		for (i = 0; i < JXNUmap.n; i++) {
+			for (j = a - 1; j < JXNUmap.n; j++) {
+				JXNUmap.edges[i][j] = JXNUmap.edges[i][j + 1];
+				JXNUmap.edges[j][i] = JXNUmap.edges[j+1][i];
+			}
+		}
+		JXNUmap.n--;
+		JXNUmap.e -= count;
+	}
+	else {
+		printf("退出咯\n");
+		return;
+	}
+	printf("已经删完了，这是删完之后的景点\n");
+	showInfo();
+	printf("还需要删除嘛，要的话输入1:\n");
+	scanf_s("%d", &flag);
+	if (flag == 1) {
+		delInfo();
+	}
+	Sleep(100);
 	return;
 }
 
 void addPath(void) {
+	if (JXNUmap.n <= 1) {
+		printf("师大景点数不够， 添加不了\n");
+		return;
+	}
+	showInfo();
+	printf("请输入你要加哪两个景点之间的路，请写编号:\n");
+	int a, b;
+	scanf_s("%d %d", &a, &b);
+	while (a < 1 || a > JXNUmap.n || b < 1 || b>JXNUmap.n || a == b) {
+		if (a == b)
+			printf("输错了吧，这俩咋一样呢？！\n");
+		else
+			printf("编号输入有误，最小是1， 最大是%d，重新输\n", JXNUmap.n);
+		scanf_s("%d %d", &a, &b);
+	}
+
+
+	if (JXNUmap.edges[a - 1][b - 1] != INFINITY) {
+		printf("%s与%s之间这条路已经有了，不要再添加！\n", JXNUmap.vers[a - 1].name, JXNUmap.vers[b - 1].name);
+		return;
+	}
+	else
+	{
+		int distance;
+		printf("请输入%s与%s之间道路的长度：\n", JXNUmap.vers[a - 1].name, JXNUmap.vers[b - 1].name);
+		scanf_s("%d", &distance);
+		while (distance <= 0 || distance >= INFINITY)
+		{
+			printf("这个长度有问题,请重新输入:\n");
+			scanf_s("%d", &distance);
+		}
+		printf("正在添加道路...\n");
+		JXNUmap.edges[a - 1][b - 1] = JXNUmap.edges[b - 1][a - 1] = distance;
+		JXNUmap.e++;
+
+		printf("这条路添加成功了！\n");
+		printf("%s到%s现在的路为%dm\n", JXNUmap.vers[a - 1].name, JXNUmap.vers[b - 1].name, JXNUmap.edges[b - 1][a - 1]);
+		printf("还要加就输入1，输入其他字符就退出\n");
+		int flag;
+		scanf_s("%d", &flag);
+		if (flag == True) {
+			addPath();
+		}
+		else {
+			printf("1s后退出主界面了\n");
+			Sleep(1000);
+		}
+	}
 	return;
 }
 
 void delPath(void) {
+	if (JXNUmap.n <= 1) {
+		printf("师大景点数不够， 删不了，先去修路吧\n");
+		return;
+	}
+	if (JXNUmap.e <= 0)
+	{
+		printf("地图中无任何道路，请先添加！\n");
+		return;
+	}
+	showInfo();
+	printf("请输入你要删哪两个景点之间的路，请写编号:\n");
+	int a, b;
+	scanf_s("%d %d", &a, &b);
+	while (a < 1 || a > JXNUmap.n || b < 1 || b>JXNUmap.n || a == b) {
+		if (a == b)
+			printf("输错了吧，这俩咋一样呢？！\n");
+		else
+			printf("编号输入有误，最小是1， 最大是%d，重新输\n", JXNUmap.n);
+		scanf_s("%d %d", &a, &b);
+	}
+
+
+	if (JXNUmap.edges[a - 1][b - 1] == INFINITY) {
+		printf("%s与%s之间这条路没有，请删别的路！\n", JXNUmap.vers[a - 1].name, JXNUmap.vers[b - 1].name);
+		return;
+	}
+	else
+	{
+		printf("您要删除的是%s与%s的道路,确认输入1 \n", JXNUmap.vers[a - 1].name, JXNUmap.vers[b - 1].name);
+		int flag;
+		scanf_s("%d", &flag);
+		if (flag == 1)
+		{
+			printf("正在删除道路...\n");
+			JXNUmap.edges[a - 1][b - 1] = JXNUmap.edges[b - 1][a - 1] = INFINITY;
+			JXNUmap.e--;
+			printf("删除成功\n");
+			printf("还要删除就输入1，输入其他字符就退出\n");
+			scanf_s("%d", &flag);
+			if (flag == True) {
+				delPath();
+			}
+			else {
+				printf("1s后退出主界面了\n");
+				Sleep(1000);
+			}
+		}
+		else {
+			printf("1s后回到主界面");
+			Sleep(1000);
+		}
+	}
+
 	return;
 }
