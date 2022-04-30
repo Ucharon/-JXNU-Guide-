@@ -372,15 +372,15 @@ void modifyInfo(void) {
 		printf("编号输错了，从1开始到%d，你再试试别的\n", JXNUmap.n);
 		scanf_s("%d", &a);
 	}
-	char newName[100];
-	char newFeatures[1000];
-	printf("这里原来叫%s,你要把他换成啥?:\n", JXNUmap.vers[a-1].name);
-	scanf_s("%s", newName,MAXCHAR);
+	char newName[MaxNameLength];
+	char newFeatures[MaxNameLength];
+	printf("这里原来叫%s,你要把他换成啥?:\n", JXNUmap.vers[a - 1].name);
+	scanf_s("%s", newName, MaxNameLength);
 	printf("简介现在是:\n%s\n你说改成啥?:\n", JXNUmap.vers[a - 1].features);
-	scanf_s("%s", newFeatures, MAXCHAR);
+	scanf_s("%s", newFeatures, MaxNameLength);
 	printf("正在修改...\n");
-	strcpy(JXNUmap.vers[a - 1].name, newName, MAXCHAR);
-	strcpy(JXNUmap.vers[a - 1].features,newFeatures, MAXCHAR);
+	strcpy(JXNUmap.vers[a - 1].name, newName);
+	strcpy(JXNUmap.vers[a - 1].features, newFeatures);
 	printf("行了改好了\n");
 	printf("要还改就输入1，输别的就退出了\n");
 	int flag;
@@ -388,6 +388,7 @@ void modifyInfo(void) {
 	if (flag == True) {
 		modifyInfo();
 	}
+
 	return;
 }
 
@@ -401,9 +402,9 @@ void addInfo(void) {
 	char newName[100];
 	char newFeature[1000];
 	printf("新加的这个景点叫啥?:\n");
-	scanf_s("%s", newName, MAXCHAR);
+	scanf_s("%s", newName, MaxNameLength);
 	printf("对这个景点加点简介吧:\n");
-	scanf_s("%s", newFeature, MAXCHAR);
+	scanf_s("%s", newFeature, MaxNameLength);
 	showInfo();
 
 	int m;
@@ -436,8 +437,8 @@ void addInfo(void) {
 		JXNUmap.edges[a - 1][JXNUmap.n] = JXNUmap.edges[JXNUmap.n][a - 1] = distance;
 	}
 	printf("正在添加景点...\n");
-	strcpy(JXNUmap.vers[JXNUmap.n++].name, newName, MAXCHAR);
-	strcpy(JXNUmap.vers[JXNUmap.n-1].features, newFeature, MAXCHAR);
+	strcpy(JXNUmap.vers[JXNUmap.n++].name, newName, MaxNameLength);
+	strcpy(JXNUmap.vers[JXNUmap.n - 1].features, newFeature, MaxNameLength);
 	JXNUmap.e += m;
 
 	printf("这个景点添加成功了！\n");
@@ -485,7 +486,7 @@ void delInfo(void) {
 		for (i = 0; i < JXNUmap.n; i++) {
 			for (j = a - 1; j < JXNUmap.n; j++) {
 				JXNUmap.edges[i][j] = JXNUmap.edges[i][j + 1];
-				JXNUmap.edges[j][i] = JXNUmap.edges[j+1][i];
+				JXNUmap.edges[j][i] = JXNUmap.edges[j + 1][i];
 			}
 		}
 		JXNUmap.n--;
